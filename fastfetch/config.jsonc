@@ -1,0 +1,169 @@
+// ============================================================
+// Legio GCAD — Fastfetch Configuration
+// Palette: Void Black / Oxblood / Imperial Gold
+// Apply: ~/.config/fastfetch/config.jsonc
+// Run:   fastfetch
+// ============================================================
+{
+    "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+    "logo": {
+        "type": "file",
+        "source": "~/.config/fastfetch/legio-gcad-logo.txt",
+        "color": {
+            // c1 = oxblood mid, c2 = imperial gold, c3 = gold dim
+            "1": "#6b1414",
+            "2": "#ffc845",
+            "3": "#b8860b"
+        },
+        "padding": {
+            "top": 1,
+            "right": 3
+        }
+    },
+
+    "display": {
+        "separator": " » ",
+        "color": {
+            "keys": "#ffc845",
+            "title": "#ffc845",
+            "output": "#6b1414"
+        },
+        "key": {
+            "width": 14
+        },
+        "percent": {
+            "type": 2,
+            "color": {
+                // bars climb gold -> bright gold -> oxblood as usage rises
+                "green": "#b8860b",
+                "yellow": "#ffc845",
+                "red": "#6b1414"
+            }
+        }
+    },
+
+    "modules": [
+        {
+            "type": "custom",
+            "format": "══════════════════════════════════════════════════════════════",
+            "outputColor": "#ffc845"
+        },
+        {
+            "type": "title",
+            "format": "{user-name}@{host-name}",
+            "keyColor": "#ffc845"
+        },
+        {
+            "type": "command",
+            "key": "Dies",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414",
+            "text": "date '+%A, %Y-%m-%d  %H:%M:%S'"
+        },
+        {
+            "type": "custom",
+            "format": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "os",
+            "key": "Imperium",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "kernel",
+            "key": "Nucleus",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "wm",
+            "key": "Praefectus",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "wmtheme",
+            "key": "Vestis",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "shell",
+            "key": "Cortex",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "terminal",
+            "key": "Atrium",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "custom",
+            "format": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "cpu",
+            "key": "Centurio",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414",
+            "format": "{name} ({cores-physical}C/{cores-logical}T)"
+        },
+        {
+            "type": "gpu",
+            "key": "Pictor",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "memory",
+            "key": "Horreum",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414",
+            "format": "{used}/{total} ({percentage}%)"
+        },
+        {
+            "type": "disk",
+            "key": "Armarium",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414",
+            "folders": "/"
+        },
+        {
+            "type": "custom",
+            "format": "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "uptime",
+            "key": "Vigilia",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "packages",
+            "key": "Onera",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414"
+        },
+        {
+            "type": "localip",
+            "key": "Limes",
+            "keyColor": "#ffc845",
+            "outputColor": "#6b1414",
+            "showIpv4": true,
+            "showIpv6": false
+        },
+        {
+            "type": "custom",
+            "format": "══════════════════════════════════════════════════════════════",
+            "outputColor": "#ffc845"
+        }
+    ]
+}
+

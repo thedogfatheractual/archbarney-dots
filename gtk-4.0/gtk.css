@@ -1,0 +1,349 @@
+/* ============================================================
+ * Legio GCAD — GTK4 Theme (gtk.css)
+ * Palette: Void Black / Oxblood / Imperial Gold
+ * Apply via: ~/.config/gtk-4.0/gtk.css
+ * ============================================================
+ * NOTE on the headerbar-grey bug:
+ * GTK headerbars use a SEPARATE style for the unfocused state
+ * via the `:backdrop` pseudo-class. If you only style `headerbar`
+ * and never `headerbar:backdrop`, GTK falls back to Adwaita's
+ * default backdrop background (grey) the moment the window loses
+ * focus. Every headerbar rule below has a matching :backdrop rule.
+ *
+ * GTK4 NOTE: titlebar buttons live inside a `windowcontrols` node
+ * (not bare `button.close` like GTK3), so those selectors differ
+ * slightly from the gtk-3.0 version of this file.
+ * ============================================================ */
+
+@define-color void_black     #0a0908;
+@define-color surface        #161311;
+@define-color oxblood        #3d0c0c;
+@define-color oxblood_mid    #6b1414;
+@define-color imperial_gold  #ffc845;
+@define-color gold_dim       #b8860b;
+@define-color parchment      #e8dfc8;
+@define-color alert_red      #c41e3a;
+
+/* ---- Standard GTK Global Theme Overrides ---- */
+@define-color theme_selected_bg_color #6b1414;
+@define-color theme_selected_fg_color #ffc845;
+@define-color theme_base_color #0a0908;
+@define-color theme_bg_color #161311;
+@define-color theme_fg_color #e8dfc8;
+@define-color theme_unfocused_selected_bg_color #3d0c0c;
+@define-color theme_unfocused_selected_fg_color #e8dfc8;
+@define-color theme_unfocused_bg_color #161311;
+@define-color theme_unfocused_base_color #0a0908;
+@define-color theme_unfocused_fg_color alpha(#e8dfc8, 0.6);
+@define-color accent_color #6b1414;
+@define-color accent_bg_color #6b1414;
+@define-color accent_fg_color #ffc845;
+
+/* ---- Base window ---- */
+window {
+    background-color: @void_black;
+    color: @parchment;
+}
+
+window:backdrop {
+    background-color: @void_black;
+    color: alpha(@parchment, 0.6);
+}
+
+/* ---- Headerbar: focused ---- */
+headerbar {
+    background-image: linear-gradient(to bottom, @surface, @void_black);
+    color: @parchment;
+    border-color: @oxblood_mid;
+    box-shadow: inset 0 1px @oxblood_mid;
+}
+
+headerbar .title {
+    color: @imperial_gold;
+    font-weight: 600;
+}
+
+headerbar .subtitle {
+    color: @gold_dim;
+}
+
+/* ---- Headerbar: UNFOCUSED (this is the fix) ---- */
+headerbar:backdrop {
+    background-image: linear-gradient(to bottom, @surface, @void_black);
+    color: alpha(@parchment, 0.6);
+    border-color: alpha(@oxblood_mid, 0.5);
+    box-shadow: inset 0 1px alpha(@oxblood_mid, 0.5);
+}
+
+headerbar:backdrop .title {
+    color: alpha(@imperial_gold, 0.55);
+}
+
+headerbar:backdrop .subtitle {
+    color: alpha(@gold_dim, 0.5);
+}
+
+/* ---- Headerbar buttons (min/max/close + general) ---- */
+headerbar button {
+    background-image: none;
+    background-color: transparent;
+    color: @parchment;
+    border: 1px solid alpha(@oxblood_mid, 0.4);
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+headerbar button:hover {
+    background-image: none;
+    background-color: @oxblood;
+    color: @imperial_gold;
+    border-color: @imperial_gold;
+}
+
+headerbar button:active,
+headerbar button:checked {
+    background-image: none;
+    background-color: @oxblood_mid;
+    color: @imperial_gold;
+}
+
+headerbar:backdrop button {
+    background-image: none;
+    border-color: alpha(@oxblood_mid, 0.25);
+    color: alpha(@parchment, 0.5);
+}
+
+/* Close button gets the alert red treatment on hover (GTK4: lives inside windowcontrols) */
+windowcontrols button.close:hover {
+    background-image: none;
+    background-color: @alert_red;
+    color: @parchment;
+    border-color: @alert_red;
+}
+
+windowcontrols button {
+    background-image: none;
+    background-color: transparent;
+    border: 1px solid alpha(@oxblood_mid, 0.4);
+    box-shadow: none;
+}
+
+windowcontrols button:hover {
+    background-image: none;
+    background-color: @oxblood;
+    color: @imperial_gold;
+    border-color: @imperial_gold;
+}
+
+/* ---- Toolbars (Thunar path bar lives here) ---- */
+toolbar,
+.primary-toolbar {
+    background-color: @surface;
+    color: @parchment;
+}
+
+toolbar:backdrop,
+.primary-toolbar:backdrop {
+    background-color: alpha(@surface, 0.9);
+    color: alpha(@parchment, 0.6);
+}
+
+/* ---- Buttons (general & backdrop) ---- */
+button {
+    background-image: none;
+    background-color: @surface;
+    color: @parchment;
+    border: 1px solid @oxblood_mid;
+    border-radius: 4px;
+    box-shadow: none;
+    text-shadow: none;
+    -gtk-icon-shadow: none;
+    transition: all 150ms ease;
+}
+
+button:hover {
+    background-image: none;
+    background-color: @oxblood;
+    border-color: @imperial_gold;
+    color: @imperial_gold;
+}
+
+button:active,
+button:checked {
+    background-image: none;
+    background-color: @oxblood_mid;
+    color: @imperial_gold;
+}
+
+button:backdrop {
+    background-image: none;
+    background-color: @surface;
+    color: alpha(@parchment, 0.7);
+    border-color: alpha(@oxblood_mid, 0.4);
+}
+
+button:disabled {
+    background-image: none;
+    background-color: alpha(@surface, 0.5);
+    color: alpha(@parchment, 0.3);
+    border-color: alpha(@oxblood_mid, 0.3);
+}
+
+button:backdrop:disabled {
+    background-image: none;
+    background-color: alpha(@surface, 0.3);
+    color: alpha(@parchment, 0.2);
+    border-color: alpha(@oxblood_mid, 0.2);
+}
+
+/* ---- Combobox / Dropdown menus ---- */
+combobox,
+combobox button,
+combobox button:backdrop {
+    background-image: none;
+    background-color: @surface;
+    color: @parchment;
+    border: 1px solid @oxblood_mid;
+    box-shadow: none;
+}
+
+combobox:backdrop {
+    background-color: @void_black;
+    color: alpha(@parchment, 0.6);
+}
+
+/* ---- Suggested / destructive action buttons ---- */
+button.suggested-action {
+    background-image: none;
+    background-color: @gold_dim;
+    color: @void_black;
+    border-color: @imperial_gold;
+}
+
+button.suggested-action:hover {
+    background-image: none;
+    background-color: @imperial_gold;
+}
+
+button.destructive-action {
+    background-image: none;
+    background-color: @alert_red;
+    color: @parchment;
+    border-color: @alert_red;
+}
+
+/* ---- Entries / text inputs ---- */
+entry {
+    background-color: @surface;
+    color: @parchment;
+    border: 1px solid @oxblood_mid;
+    border-radius: 4px;
+    caret-color: @imperial_gold;
+}
+
+entry:focus {
+    border-color: @imperial_gold;
+    box-shadow: inset 0 0 0 1px alpha(@imperial_gold, 0.4);
+}
+
+entry:backdrop {
+    background-color: alpha(@surface, 0.85);
+    color: alpha(@parchment, 0.6);
+    border-color: alpha(@oxblood_mid, 0.4);
+}
+
+selection {
+    background-color: @oxblood_mid;
+    color: @parchment;
+}
+
+/* ---- Menus / popovers ---- */
+menu,
+.menu,
+popover {
+    background-color: @surface;
+    color: @parchment;
+    border: 1px solid @oxblood_mid;
+}
+
+menuitem:hover,
+modelbutton:hover {
+    background-color: @oxblood;
+    color: @imperial_gold;
+}
+
+/* ---- Notebook / tabs ---- */
+notebook > header {
+    background-color: @void_black;
+    border-color: @oxblood_mid;
+}
+
+notebook > header tab {
+    color: alpha(@parchment, 0.6);
+}
+
+notebook > header tab:checked {
+    color: @imperial_gold;
+    border-bottom: 2px solid @imperial_gold;
+}
+
+/* ---- Scrollbars ---- */
+scrollbar slider {
+    background-color: @oxblood_mid;
+    border-radius: 6px;
+}
+
+scrollbar slider:hover {
+    background-color: @imperial_gold;
+}
+
+/* ---- Checkbuttons / radios / switches ---- */
+checkbutton check:checked,
+radiobutton radio:checked {
+    background-color: @imperial_gold;
+    border-color: @imperial_gold;
+    color: @void_black;
+}
+
+switch:checked {
+    background-color: @gold_dim;
+}
+
+switch slider {
+    background-color: @parchment;
+}
+
+/* ---- Progress bars ---- */
+progressbar progress {
+    background-color: @imperial_gold;
+}
+
+progressbar trough {
+    background-color: @surface;
+}
+
+/* ---- Tooltips ---- */
+tooltip {
+    background-color: @void_black;
+    color: @imperial_gold;
+    border: 1px solid @oxblood_mid;
+}
+
+/* ---- Sidebar / treeview (file managers, etc.) ---- */
+.sidebar,
+treeview {
+    background-color: @surface;
+    color: @parchment;
+}
+
+.sidebar:backdrop,
+treeview:backdrop {
+    background-color: alpha(@surface, 0.9);
+    color: alpha(@parchment, 0.6);
+}
+
+treeview:selected,
+row:selected {
+    background-color: @oxblood_mid;
+    color: @imperial_gold;
+}

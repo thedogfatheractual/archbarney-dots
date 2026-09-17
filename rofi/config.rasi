@@ -1,0 +1,454 @@
+/**
+ * ============================================================
+ * LEGIO GCAD — ROMAN IMPERIUM // COGITATOR HUD
+ * Palette: Void Black / Surface / Oxblood / Imperial Gold / Parchment
+ * ============================================================
+ */
+
+configuration {
+    modi:                       "drun,run,filebrowser";
+    show-icons:                 true;
+    display-drun:               "  [I]   APPLICATIONS   ›";
+    display-run:                "  [II]  COMMAND PANE   ›";
+    display-filebrowser:        "  [III] FILE EXPLORER  ›";
+    drun-display-format:        "{name}";
+    font:                       "Terminess Nerd Font 11";
+}
+
+@import "sysinfo.rasi"
+
+* {
+    /* Default Fallback Metrics */
+    sys-name:    "── ARCHBARNEY XIII ──";
+    sys-time:    "󰃭 Mon 31 Aug · 01:20";
+    sys-uptime:  "󱑂 Up 1d 9h";
+    sys-ram:     "󰍛 RAM 10.8 GB / 62 GB (17%)";
+    sys-disk:    "󰋊 Disk 787 GB / 938 GB (89%)";
+    sys-temp:    "󰔏 CPU 40°C · GPU 42°C";
+    sys-pkgs:    "󰏖 0 updates pending";
+
+    /* Roman Cogitator Palette */
+    void-black:      #0a0908;
+    row-even:        #110e0c;
+    row-odd:         #181411;
+    surface:         #14110f;
+    surface-alt:     #1b1613;
+    oxblood-dark:    #220606;
+    oxblood:         #3d0c0c;
+    oxblood-mid:     #721616;
+    oxblood-bright:  #9e1c1c;
+    imperial-gold:   #ffc845;
+    gold-dim:        #b8860b;
+    gold-muted:      #7a5a18;
+    parchment:       #e8dfc8;
+    parchment-dim:   #a89f8c;
+    alert-red:       #c41e3a;
+
+    background-color:            transparent;
+    text-color:                  @parchment;
+    accent-color:                @imperial-gold;
+    border-color:                @oxblood-mid;
+
+    margin:                      0px;
+    padding:                     0px;
+    spacing:                     0px;
+}
+
+window {
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    /* Classical Golden Rectangle (Sectio Aurea ~ 1.618:1) */
+    width:                       980px;
+    border:                      2px;
+    border-color:                @oxblood-mid;
+    border-radius:               4px;
+    background-color:            @void-black;
+    padding:                     16px;
+    cursor:                      "default";
+}
+
+mainbox {
+    enabled:                     true;
+    orientation:                 vertical;
+    spacing:                     12px;
+    background-color:            transparent;
+    children:                    [ "body-box", "dock-box" ];
+}
+
+/* ---- Main Split: Left Sidebar Nav + Right Content ---- */
+body-box {
+    orientation:                 horizontal;
+    spacing:                     16px;
+    background-color:            transparent;
+    children:                    [ "sidebar-box", "content-box" ];
+}
+
+/* Left Sidebar: Modes & Navigation */
+sidebar-box {
+    width:                       245px;
+    expand:                      false;
+    orientation:                 vertical;
+    spacing:                     8px;
+    background-color:            transparent;
+    children:                    [ "textbox-sidebar-title", "mode-switcher", "dummy", "sidebar-info" ];
+}
+
+textbox-sidebar-title {
+    expand:                      false;
+    padding:                     4px 6px;
+    background-color:            transparent;
+    border:                      0px;
+    text-color:                  @imperial-gold;
+    font:                        "Terminess Nerd Font Bold 10";
+    str:                         @sys-name;
+    horizontal-align:            0.5;
+}
+
+mode-switcher {
+    enabled:                     true;
+    orientation:                 vertical;
+    spacing:                     6px;
+    background-color:            transparent;
+}
+
+button {
+    padding:                     9px 12px;
+    border:                      1px;
+    border-color:                @oxblood-dark;
+    border-radius:               3px;
+    background-color:            @surface;
+    text-color:                  @parchment-dim;
+    cursor:                      pointer;
+    font:                        "Terminess Nerd Font 11";
+    horizontal-align:            0.0;
+}
+
+button selected {
+    background-color:            @oxblood-mid;
+    text-color:                  @imperial-gold;
+    border:                      1px;
+    border-color:                @imperial-gold;
+    font:                        "Terminess Nerd Font Bold 11";
+}
+
+/* Left Sidebar Bottom Sysrep / Recap Card */
+sidebar-info {
+    expand:                      false;
+    orientation:                 vertical;
+    spacing:                     3px;
+    padding:                     8px 10px;
+    background-color:            @surface;
+    border:                      1px;
+    border-color:                @oxblood-dark;
+    border-radius:               3px;
+    children:                    [
+        "textbox-info-header",
+        "textbox-info-time",
+        "textbox-info-uptime",
+        "textbox-info-ram",
+        "textbox-info-disk",
+        "textbox-info-temp",
+        "textbox-info-pkgs"
+    ];
+}
+
+textbox-info-header {
+    expand:                      false;
+    text-color:                  @gold-dim;
+    font:                        "Terminess Nerd Font Bold 9";
+    str:                         "── SYSREP // RECAP ──";
+    horizontal-align:            0.5;
+}
+
+textbox-info-time {
+    expand:                      false;
+    text-color:                  @imperial-gold;
+    font:                        "Terminess Nerd Font 9";
+    str:                         @sys-time;
+}
+
+textbox-info-uptime {
+    expand:                      false;
+    text-color:                  @parchment;
+    font:                        "Terminess Nerd Font 9";
+    str:                         @sys-uptime;
+}
+
+textbox-info-ram {
+    expand:                      false;
+    text-color:                  @parchment-dim;
+    font:                        "Terminess Nerd Font 9";
+    str:                         @sys-ram;
+}
+
+textbox-info-disk {
+    expand:                      false;
+    text-color:                  @parchment-dim;
+    font:                        "Terminess Nerd Font 9";
+    str:                         @sys-disk;
+}
+
+textbox-info-temp {
+    expand:                      false;
+    text-color:                  @parchment-dim;
+    font:                        "Terminess Nerd Font 9";
+    str:                         @sys-temp;
+}
+
+textbox-info-pkgs {
+    expand:                      false;
+    text-color:                  @imperial-gold;
+    font:                        "Terminess Nerd Font Bold 9";
+    str:                         @sys-pkgs;
+}
+
+/* Right Content: Header & Dynamic List */
+content-box {
+    orientation:                 vertical;
+    spacing:                     10px;
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview" ];
+}
+
+/* ---- Terminal Command Input Header ---- */
+inputbar {
+    enabled:                     true;
+    spacing:                     8px;
+    padding:                     8px 12px;
+    background-color:            @surface;
+    border:                      1px;
+    border-color:                @oxblood-mid;
+    border-radius:               3px;
+    text-color:                  @parchment;
+    children:                    [ "prompt", "entry" ];
+}
+
+prompt {
+    enabled:                     true;
+    background-color:            transparent;
+    text-color:                  @imperial-gold;
+    font:                        "Terminess Nerd Font Bold 11";
+}
+
+entry {
+    enabled:                     true;
+    background-color:            transparent;
+    text-color:                  @parchment;
+    cursor:                      text;
+    font:                        "Terminess Nerd Font 11";
+    placeholder:                 "TYPE TO SEARCH...";
+    placeholder-color:           @gold-muted;
+}
+
+/* ---- Alternating Zebra Terminal List ---- */
+listview {
+    enabled:                     true;
+    columns:                     1;
+    lines:                       8;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    spacing:                     3px;
+    background-color:            transparent;
+    text-color:                  @parchment;
+}
+
+element {
+    enabled:                     true;
+    spacing:                     10px;
+    padding:                     7px 12px;
+    border-radius:               2px;
+    cursor:                      pointer;
+    border:                      0px 0px 0px 3px;
+    border-color:                transparent;
+}
+
+/* Zebra Row A (Even) */
+element normal.normal {
+    background-color:            @row-even;
+    text-color:                  @parchment;
+}
+
+/* Zebra Row B (Odd) */
+element alternate.normal {
+    background-color:            @row-odd;
+    text-color:                  @parchment;
+}
+
+/* Selected Highlight with Left Gold Indicator */
+element selected.normal {
+    background-color:            @oxblood-mid;
+    text-color:                  @imperial-gold;
+    border-color:                @imperial-gold;
+}
+
+/* Active elements */
+element normal.active {
+    background-color:            @oxblood;
+    text-color:                  @imperial-gold;
+    border-color:                @oxblood-mid;
+}
+
+element alternate.active {
+    background-color:            @oxblood-dark;
+    text-color:                  @imperial-gold;
+    border-color:                @oxblood-mid;
+}
+
+element selected.active {
+    background-color:            @oxblood-bright;
+    text-color:                  @imperial-gold;
+    border-color:                @imperial-gold;
+}
+
+/* Urgent elements */
+element normal.urgent {
+    background-color:            @alert-red;
+    text-color:                  @parchment;
+}
+
+element alternate.urgent {
+    background-color:            @alert-red;
+    text-color:                  @parchment;
+}
+
+element selected.urgent {
+    background-color:            @alert-red;
+    text-color:                  @imperial-gold;
+    border:                      1px;
+    border-color:                @imperial-gold;
+}
+
+element-icon {
+    background-color:            transparent;
+    text-color:                  inherit;
+    size:                        20px;
+    cursor:                      inherit;
+}
+
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    highlight:                   inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+    font:                        "Terminess Nerd Font 11";
+}
+
+/* ---- Bottom Quick Launch App Dock (Ribbon Bar) ---- */
+dock-box {
+    expand:                      false;
+    orientation:                 horizontal;
+    spacing:                     6px;
+    padding:                     6px 10px;
+    border:                      1px;
+    border-color:                @oxblood-dark;
+    border-radius:               3px;
+    background-color:            @surface;
+    children:                    [
+        "textbox-brave",
+        "textbox-goofcord",
+        "textbox-steam",
+        "textbox-termius",
+        "textbox-kitty",
+        "textbox-thunar"
+    ];
+}
+
+textbox-brave {
+    expand:                      true;
+    padding:                     4px 6px;
+    background-color:            transparent;
+    text-color:                  @gold-dim;
+    font:                        "Terminess Nerd Font 10";
+    horizontal-align:            0.5;
+    vertical-align:              0.5;
+    str:                         "󰈹 Brave";
+}
+
+textbox-goofcord {
+    expand:                      true;
+    padding:                     4px 6px;
+    background-color:            transparent;
+    text-color:                  @gold-dim;
+    font:                        "Terminess Nerd Font 10";
+    horizontal-align:            0.5;
+    vertical-align:              0.5;
+    str:                         "󰙯 Goofcord";
+}
+
+textbox-steam {
+    expand:                      true;
+    padding:                     4px 6px;
+    background-color:            transparent;
+    text-color:                  @gold-dim;
+    font:                        "Terminess Nerd Font 10";
+    horizontal-align:            0.5;
+    vertical-align:              0.5;
+    str:                         "󰓓 Steam";
+}
+
+textbox-termius {
+    expand:                      true;
+    padding:                     4px 6px;
+    background-color:            transparent;
+    text-color:                  @gold-dim;
+    font:                        "Terminess Nerd Font 10";
+    horizontal-align:            0.5;
+    vertical-align:              0.5;
+    str:                         "󱘖 Termius";
+}
+
+textbox-kitty {
+    expand:                      true;
+    padding:                     4px 6px;
+    background-color:            transparent;
+    text-color:                  @gold-dim;
+    font:                        "Terminess Nerd Font 10";
+    horizontal-align:            0.5;
+    vertical-align:              0.5;
+    str:                         "󰄛 Kitty";
+}
+
+textbox-thunar {
+    expand:                      true;
+    padding:                     4px 6px;
+    background-color:            transparent;
+    text-color:                  @gold-dim;
+    font:                        "Terminess Nerd Font 10";
+    horizontal-align:            0.5;
+    vertical-align:              0.5;
+    str:                         "󰉋 Thunar";
+}
+
+message {
+    enabled:                     true;
+    padding:                     8px;
+    background-color:            @surface;
+    border:                      1px;
+    border-color:                @oxblood-mid;
+    border-radius:               3px;
+    text-color:                  @imperial-gold;
+}
+
+textbox {
+    background-color:            transparent;
+    text-color:                  @imperial-gold;
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+}
+
+error-message {
+    padding:                     12px;
+    border:                      2px;
+    border-color:                @alert-red;
+    border-radius:               4px;
+    background-color:            @void-black;
+    text-color:                  @alert-red;
+}

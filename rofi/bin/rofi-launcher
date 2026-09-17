@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+CACHE_DIR="$HOME/.cache"
+mkdir -p "$CACHE_DIR"
+
+# Background updates check (runs in background, never blocks)
+UPDATES_FILE="$CACHE_DIR/rofi-updates.txt"
+if [ ! -f "$UPDATES_FILE" ] || [ $(($(date +%s) - $(stat -c %Y "$UPDATES_FILE" 2>/dev/null || echo 0))) -gt 600 ]; then
+    ( ( (checkupdates 2>/dev/null || true; yay -Qum 2>/dev/null || true) | sort -u | wc -l > "$UPDATES_FILE.tmp" 2>/dev/null ) && mv "$UPDATES_FILE.tmp" "$UPDATES_FILE" & )
+fi
+UPDATES_COUNT=$(cat "$UPDATES_FILE" 2>/dev/null || echo "0")
+[ -z "$UPDATES_COUNT" ] && UPDATES_COUNT="0"
+
+# System branding & metrics (<2ms)
+SYS_NAME="── $(uname -n | tr '[:lower:]' '[:upper:]') ──"
+DATETIME=$(date +"󰃭 %a %d %b · %H:%M")
+UPTIME="󱑂 Up $(uptime -p 2>/dev/null | sed 's/up //; s/ days\?,/d/; s/ hours\?,/h/; s/ minutes\?/m/; s/ minute\?/m/')"
+RAM="󰍛 RAM $(free -m 2>/dev/null | awk 'NR==2 {printf "%.1f GB / %.0f GB (%d%%)", $3/1024, $2/1024, $3*100/$2}')"
+STORAGE="󰋊 Disk $(df -h / 2>/dev/null | awk 'NR==2 {sub(/G/, " GB", $2); sub(/G/, " GB", $3); print $3 " / " $2 " (" $5 ")"}')"
+
+CPU_TEMP=$(sensors k10temp-pci-00c3 2>/dev/null | awk '/Tctl:/ {print $2; exit}' | tr -d '+')
+GPU_TEMP=$(sensors amdgpu-pci-0300 2>/dev/null | awk '/edge:/ {print $2; exit}' | tr -d '+')
+if [ -n "$CPU_TEMP" ] && [ -n "$GPU_TEMP" ]; then
+    TEMP="󰔏 CPU ${CPU_TEMP%.*}°C · GPU ${GPU_TEMP%.*}°C"
+elif [ -n "$CPU_TEMP" ]; then
+    TEMP="󰔏 CPU ${CPU_TEMP%.*}°C"
+else
+    TEMP="󰔏 Temp N/A"
+fi
+
+if [ "$UPDATES_COUNT" -eq 0 ] 2>/dev/null; then
+    PKGS="󰏖 System up-to-date"
+elif [ "$UPDATES_COUNT" -eq 1 ] 2>/dev/null; then
+    PKGS="󰏖 1 update pending"
+else
+    PKGS="󰏖 $UPDATES_COUNT updates pending"
+fi
+
+cat << RASI_EOF > "$HOME/.config/rofi/sysinfo.rasi"
+* {
+    sys-name:    "$SYS_NAME";
+    sys-time:    "$DATETIME";
+    sys-uptime:  "$UPTIME";
+    sys-ram:     "$RAM";
+    sys-disk:    "$STORAGE";
+    sys-temp:    "$TEMP";
+    sys-pkgs:    "$PKGS";
+}
+RASI_EOF
+
+exec /usr/bin/rofi "$@"

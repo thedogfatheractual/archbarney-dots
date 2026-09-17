@@ -1,0 +1,12 @@
+{
+    "rules": [
+        {
+            "action": "hide",
+            "pattern": "element"
+        },
+        {
+            "action": "mute",
+            "pattern": "element"
+        }
+    ]
+}
